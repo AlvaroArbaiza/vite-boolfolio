@@ -1,15 +1,18 @@
 <script >
 import axios from 'axios';
+import MainComp from './components/MainComp.vue';
 
 export default {
+    name: "App",
+    components: {
+        MainComp
+    },
     data() {
         return {
-            pathBase: 'http://127.0.0.1:8000/',
-            projects: []
         };
     },
     mounted() {
-        this.getProjects();
+        // this.getProjects();
     },
     created() {
     },
@@ -37,75 +40,9 @@ export default {
         </div>
     </div>
 
-    <div class="container">
-        <div class="row row-gap-5">
-            <div class="col-6" v-for="(element, index) in projects" :key="index">
-
-                <div class="card">
-                    
-                    <img class="img-fluid" :src="`${pathBase}storage/${element.image}`" :alt="element.title">
-                    
-                    <!-- Card Body -->
-                    <div class="card-body">                
-                        
-                        <!-- Titolo -->
-                        <h5>
-                            <span class="opacity-75">Titolo: </span>
-                            <span class="opacity-100 text-uppercase">{{ element.title }}</span>                    
-                        </h5>
-                        
-                        <!-- Technologies -->
-                        <h6 class="mb-2">
-                            <span class="opacity-75">Linguaggio usato: </span>
-                            <span v-if="element.technology" class="badge rounded-pill text-bg-success mx-1" v-for="(elem,ind) in element.technology">{{ elem.name }}</span>  
-                        </h6>
-
-                        <!-- Customer -->
-                        <h6 class="mb-2">
-                            <span class="opacity-75">Cliente: </span>
-                            <span class="opacity-100 text-uppercase">{{ element.customer }}</span>  
-                        </h6>
-
-                        <!-- Tipologia -->
-                        <h6 class="mb-2">
-                            <span class="opacity-75">Tipologia: </span>
-                            <span class="opacity-100 text-uppercase">{{ element.type.name }}</span>  
-                        </h6>
-
-                        <!-- Settore -->
-                        <h6 class="mb-2">
-                            <span class="opacity-75">Settore: </span>
-                            <span class="opacity-100 text-uppercase">{{ element.type_customer }}</span>  
-                        </h6>
-
-                        <!-- Price -->
-                        <h6 class="mb-2">
-                            <span class="opacity-75">Prezzo: </span>
-                            <span class="opacity-100 text-uppercase">€{{ element.price }}</span>  
-                        </h6>
-
-                        <!-- Created -->
-                        <h6 class="mb-2">
-                            <span class="opacity-75">Data: </span>
-                            <span class="opacity-100 text-uppercase">{{ element.created }}</span>  
-                        </h6>
-
-
-                        <!-- Voto -->
-                        <!-- <div class="d-flex align-items-center mb-1">
-                            <h6 class="m-0 me-2 h-100">Voto:</h6>
-                            <div>
-                                <i v-for=" elem in 5" class="text-warning fa-star" :class=" elem <= voteStars(vote) ? `fa-solid` : `fa-regular` "></i>
-                            </div>
-                        </div>      -->
-
-                        <!-- Descrizione -->
-                        <p>{{ element.description }}</p>           
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <main>
+        <MainComp/>
+    </main>
 </template>
 
 <style lang="scss">
