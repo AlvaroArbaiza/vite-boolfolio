@@ -10,11 +10,13 @@ export default {
     data() {
         return {
             pathBase: 'http://127.0.0.1:8000/',
+            currentPage: null,
+            lastPage: null,
             projects: []
         };
     },
     mounted() {
-        this.getProjects();
+        this.getProjects(1);
     },
     created() {
     },
@@ -22,12 +24,18 @@ export default {
     },
     methods: {
         // chiamata api backend con axios
-        async getProjects() {
+        async getProjects(pageFirst) {
             
-            const response = await axios.get(`${this.pathBase}api/projects`);
+            const response = await axios.get(`${this.pathBase}api/projects`, {
+                params: {
+                    page: pageFirst
+                }
+            });
 
             console.log(response.data.projects)
-            this.projects = response.data.projects
+            this.projects = response.data.projects.data;
+            this.currentPage = response.data.projects.current_page;
+            this.lastPage = response.data.projects.last_page;
         }
     }
 }
@@ -50,9 +58,30 @@ export default {
                     :created="element.created"
                     :description="element.description"
                 >
-
                 </ProjectCardComp>
             </div>
+        </div>
+
+        <div class="row mt-5">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" @click.prevent="getProjects(currentPage - 1)">
+                            Previous
+                        </a>
+                    </li>
+                    <li class="page-item" v-for="(elem,index) in lastPage" :key="index">
+                        <a class="page-link" href="#" @click.prevent="getProjects(elem)">
+                            {{ elem }}
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" @click.prevent="getProjects(currentPage + 1)">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 

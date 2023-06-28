@@ -7,9 +7,9 @@ export default {
         image: String,
         technology: Array,
         customer: String,
-        type: String,
+        type: Object,
         type_customer: String,
-        price: Number,
+        price: String,
         created: String,
         description: String
     },
@@ -44,9 +44,9 @@ export default {
         </h5>
         
         <!-- Technologies -->
-        <h6 class="mb-2">
+        <h6 v-if="technology" class="mb-2">
             <span class="opacity-75">Linguaggio usato: </span>
-            <span v-if="technology" class="badge rounded-pill text-bg-success mx-1" v-for="(elem,index) in technology" :key="index">{{ elem.name }}</span>  
+            <span class="badge rounded-pill text-bg-success mx-1" v-for="(elem,index) in technology" :key="index">{{ elem.name }}</span>  
         </h6>
 
         <!-- Customer -->
@@ -56,7 +56,7 @@ export default {
         </h6>
 
         <!-- Tipologia -->
-        <h6 class="mb-2">
+        <h6 v-if="type" class="mb-2">
             <span class="opacity-75">Tipologia: </span>
             <span class="opacity-100 text-uppercase">{{ type.name }}</span>  
         </h6>
