@@ -7,10 +7,10 @@ const router = createRouter({
     routes: [
 
         // Tutte le richieste di route che non corrispondono ad altre definizioni di route verranno reindirizzate al path "/"
-        // {
-        //     path: '/:pathMatch(.*)*',
-        //     redirect: '/'
-        // },
+        {
+            path: '/:pathMatch(.*)*',
+            redirect: '/'
+        },
         
         // Home page
         { 
@@ -23,22 +23,7 @@ const router = createRouter({
             path: '/projects', 
             component: Projects,
             name: 'Projects'
-        },
-
-
-        // FilmComp - Film
-        // { 
-        //     path: '/Film', 
-        //     component: FilmComp,
-        //     name: 'Film'
-        // },
-
-        // SearchResultsComp - SearchResults
-        // { 
-        //     path: '/Search', 
-        //     name: 'search-results',
-        //     component: SearchResultsComp
-        // }
+        }
     ]
 });
 

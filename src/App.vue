@@ -10,10 +10,6 @@ export default {
         return {
         };
     },
-    mounted() {
-    },
-    created() {
-    },
     computed: {
     },
     methods: {
@@ -36,16 +32,27 @@ export default {
             ** TRANSITION **: Componente utilizzata per ottenere un effetto di transizione al componente che si trova dentro ROUTER-VIEW, la tranzizione poi dovrà essere definita con css o scss
             ** COMPONENT **:  L'attributo :key="route.path" viene utilizzato per garantire la corretta distruzione e ricreazione del componente quando la rotta cambia, mentre l'attributo :is="Component" assegna dinamicamente il componente corretto in base alla rotta attuale
         -->
-        <router-view v-slot="{Component, route}">
-            <transition name="fade" >
-                <div>
-                    <component :is="Component" :key="route.name" />
-                </div>
-            </transition>
+        <router-view v-slot="{Component}">
+            <Transition name="fade" >
+                <component :is="Component"/>
+            </Transition>
         </router-view>
     </main> 
 </template>
 
 <style lang="scss">
 @use './style/main.scss';
+
+//****  transition route  ****/
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+//**** end transition route  ****/
 </style>
