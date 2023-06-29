@@ -11,7 +11,8 @@ export default {
         type_customer: String,
         price: String,
         created: String,
-        description: String
+        description: String,
+        projectSlug: String
     },
     data() {
         return {
@@ -38,10 +39,12 @@ export default {
     <div class="card-body">                
         
         <!-- Titolo -->
-        <h5>
-            <span class="opacity-75">Titolo: </span>
-            <span class="opacity-100 text-uppercase">{{ title }}</span>                    
-        </h5>
+        <router-link class="nav-link" :to="{name: 'Project', params: { slug: projectSlug } }">                     
+            <h5>
+                <span class="opacity-75">Titolo: </span>
+                <span class="opacity-100 text-uppercase">{{ title }}</span>                    
+            </h5>
+        </router-link > 
         
         <!-- Technologies -->
         <h6 v-if="technology" class="mb-2">

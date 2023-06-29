@@ -57,6 +57,7 @@ export default {
                     :price="element.price"
                     :created="element.created"
                     :description="element.description"
+                    :projectSlug="element.slug"
                 >
                 </ProjectCard>
             </div>
