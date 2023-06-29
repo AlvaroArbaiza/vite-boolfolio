@@ -1,48 +1,49 @@
-<script >
-import axios from 'axios';
-import MainComp from './components/MainComp.vue';
+<script>
+import HeaderComp from './components/HeaderComp.vue';
 
 export default {
     name: "App",
     components: {
-        MainComp
+        HeaderComp
     },
     data() {
         return {
         };
     },
     mounted() {
-        // this.getProjects();
     },
     created() {
     },
     computed: {
     },
     methods: {
-        // chiamata api backend con axios
-        async getProjects() {
-            
-            const response = await axios.get(`${this.pathBase}api/projects`);
-
-            console.log(response.data.projects)
-            this.projects = response.data.projects
-        }
     }
 }
 </script>
 
 <template>
-    <div class="container my-5">
-        <div class="row text-center">
-            <div class="col">
-                <h1>My Projects</h1>
-            </div>
-        </div>
-    </div>
+    <header>
+        <HeaderComp>
 
+        </HeaderComp>
+    </header>
+
+    <!-- main -->
     <main>
-        <MainComp/>
-    </main>
+        <!--
+            ** ROUTER-VIEW **: Viene utilizzato per visualizzare il componente corretto in base alla rotta attuale
+            ** V-SLOT **: Viene utilizzata per definire uno slot in <router-view>. In questo caso, con l'oggetto destrutturato {Component, route}, avremo accesso alle proprietà Component e route all'interno dello slot 
+            ** TRANSITION **: Componente utilizzata per ottenere un effetto di transizione al componente che si trova dentro ROUTER-VIEW, la tranzizione poi dovrà essere definita con css o scss
+            ** COMPONENT **:  L'attributo :key="route.path" viene utilizzato per garantire la corretta distruzione e ricreazione del componente quando la rotta cambia, mentre l'attributo :is="Component" assegna dinamicamente il componente corretto in base alla rotta attuale
+        -->
+        <router-view v-slot="{Component, route}">
+            <transition name="fade" >
+                <div>
+                    <component :is="Component" :key="route.name" />
+                </div>
+            </transition>
+        </router-view>
+    </main> 
 </template>
 
 <style lang="scss">

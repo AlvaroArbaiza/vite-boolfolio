@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'ProjectCardComp',
+    name: 'ProjectCard',
     props: {
         title: String,
         pathBase: String,

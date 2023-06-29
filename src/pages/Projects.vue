@@ -1,11 +1,11 @@
 <script>
 import axios from 'axios';
-import ProjectCardComp from './ProjectCardComp.vue';
+import ProjectCard from './ProjectCard.vue';
 
 export default {
-    name: "MainComp",
+    name: "Projects",
     components: {
-        ProjectCardComp
+        ProjectCard
     },
     data() {
         return {
@@ -46,7 +46,7 @@ export default {
         <div class="row row-gap-5">
             <div class="col-6" v-for="(element, index) in projects" :key="index">
 
-                <ProjectCardComp
+                <ProjectCard
                     :title="element.title"
                     :pathBase="pathBase"
                     :image="element.image"
@@ -58,7 +58,7 @@ export default {
                     :created="element.created"
                     :description="element.description"
                 >
-                </ProjectCardComp>
+                </ProjectCard>
             </div>
         </div>
 
@@ -70,7 +70,7 @@ export default {
                             Previous
                         </a>
                     </li>
-                    <li class="page-item" v-for="(elem,index) in lastPage" :key="index">
+                    <li class="page-item" :class="elem === currentPage ? 'active' : '' " v-for="(elem,index) in lastPage" :key="index">
                         <a class="page-link" href="#" @click.prevent="getProjects(elem)">
                             {{ elem }}
                         </a>
@@ -84,7 +84,6 @@ export default {
             </nav>
         </div>
     </div>
-
 </template>
 
 <style>
