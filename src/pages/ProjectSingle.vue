@@ -23,16 +23,20 @@ export default {
     methods: {
         async getProject() {
             
-            const response = await axios.get(`${this.pathBase}api/projects/${this.$route.params.slug}`);
-            
-            if (response.data.success) {
-                console.log(response.data.project)
+            try {
+                const response = await axios.get(`${this.pathBase}api/projects/${this.$route.params.slug}`);
+                
                 this.project = response.data.project;
-            } else {
-                // redirect alla pagina 404
-                this.$router.push({ name: 'not-found' })
+                
+            } catch (error) {
+                
+                // se lo status è 404 redirect alla pagina 404(Not Found)
+                if(error.response.status === 404){
+
+                    // rimandiamo a una altra pagina usando 'this.$router.push'
+                    this.$router.push( { name: 'not-found' } )
+                }
             }
-            
         }
     }
 }

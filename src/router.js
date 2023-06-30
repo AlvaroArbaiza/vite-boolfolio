@@ -12,21 +12,20 @@ const router = createRouter({
         {
             path: '/:pathMatch(.*)*',
             redirect: '/not-found'
-        },
-        
+        },        
         // Home page
         { 
             path: '/', 
             component: Home,
             name: 'Home'
         },
-        // Projects - Projects
+        // Projects
         { 
             path: '/projects', 
             component: Projects,
             name: 'Projects'
         },
-        // Project - Project
+        // Project
         { 
             path: '/projects/:slug', 
             component: ProjectSingle,

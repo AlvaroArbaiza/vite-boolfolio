@@ -12,37 +12,80 @@ export default {
             pathBase: 'http://127.0.0.1:8000/',
             currentPage: null,
             lastPage: null,
-            projects: []
+            projects: [],
+            types: [],
+            selectType:'all'
         };
     },
     mounted() {
         this.getProjects(1);
+        this.getTypes();
     },
     created() {
     },
     computed: {
     },
     methods: {
-        // chiamata api backend con axios
+        // chiamata api backend con axios per la tabella projects
         async getProjects(pageFirst) {
-            
-            const response = await axios.get(`${this.pathBase}api/projects`, {
-                params: {
-                    page: pageFirst
-                }
-            });
 
-            console.log(response.data.projects)
-            this.projects = response.data.projects.data;
-            this.currentPage = response.data.projects.current_page;
-            this.lastPage = response.data.projects.last_page;
+            const params = {
+                page: pageFirst
+            }
+
+            if ( this.selectType !== 'all') {
+                params.type_id = this.selectType
+            }
+            
+            try {
+                const response = await axios.get(`${this.pathBase}api/projects`, { params } );
+    
+                console.log(response.data.projects)
+                this.projects = response.data.projects.data;
+                this.currentPage = response.data.projects.current_page;
+                this.lastPage = response.data.projects.last_page;
+
+            } catch(error) {
+                console.log(error);
+            }
+        },
+
+        // chiamata api backend con axios per la tabella types
+        async getTypes() {
+            
+            try {
+                const response = await axios.get(`${this.pathBase}api/types`);
+                
+                this.types = response.data.types;
+                
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }
 </script>
 
 <template>
-    <div class="container">
+    <div class="container mt-5">
+
+        <!-- select types -->
+        <div class="row mb-5">
+            <div class="col-3">
+                <label for="types" class="form-label">Tipologia</label>
+                <select v-model="selectType" class="form-select" id="types" @change="getProjects()">
+                    <option value="all" selected>--- All ---</option>
+                    <option 
+                        v-for="(element, index) in types" :key="index"
+                        :value="element.id"    
+                    >
+                    {{ element.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- projects -->
         <div class="row row-gap-5">
             <div class="col-6" v-for="(element, index) in projects" :key="index">
 
@@ -63,6 +106,7 @@ export default {
             </div>
         </div>
 
+        <!-- navigation -->
         <div class="row mt-5">
             <nav>
                 <ul class="pagination">
