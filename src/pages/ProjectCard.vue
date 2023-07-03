@@ -1,4 +1,6 @@
 <script>
+import { useRoute } from 'vue-router';
+
 export default {
     name: 'ProjectCard',
     props: {
@@ -18,6 +20,16 @@ export default {
         return {
         };
     },
+    setup() {
+        const route = useRoute();        
+        // Verifica se la route corrente è la pagina Projects
+        const isHomePage = route.path === '/';
+        
+        // se la pagina corrente sarà Projects, isProjectsPage = 'true', else 'false'
+        return {
+            isHomePage
+        };
+    },
     mounted() {
     },
     created() {
@@ -31,12 +43,17 @@ export default {
 
 <template>
 
-<div class="card">
+<div class="card border-0 position-relative">
                     
     <img class="img-fluid" :src="`${pathBase}storage/${image}`" :alt="title">
     
+    <!-- title on hover -->
+    <div v-if="isHomePage" class="project-title ps-3">
+        <h4>{{ title }}</h4>
+    </div>            
+    
     <!-- Card Body -->
-    <div class="card-body">                
+    <div v-if="!isHomePage" class="card-body">
         
         <!-- Titolo -->
         <router-link class="nav-link" :to="{name: 'Project', params: { slug: projectSlug } }">                     
@@ -89,5 +106,26 @@ export default {
 
 </template>
 
-<style>
+<style lang="scss">
+@use '../style/main.scss';
+
+.card {
+
+    .project-title {
+        height: 0;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: #ffffff;
+        background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8) 55% 97%, transparent 98%);
+        transition: 0.5s;
+    
+    }
+
+    &:hover .project-title {
+        height: 2.5rem;
+    }
+}
+
 </style>

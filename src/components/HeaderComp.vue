@@ -19,12 +19,12 @@ export default {
 </script>
 
 <template>
-<nav class="navbar navbar-expand-md mx-5 py-4 d-block">
+<nav class="navbar navbar-expand-md mx-5 py-2 d-block">
     <div class="d-flex justify-content-between">
 
         <!-- TITLE - name  -->
-        <a class="d-flex align-items-center text-decoration-none text-black" href="/">
-            <h3 class="text-uppercase">alvaro arbaiza</h3>
+        <a class="d-flex align-items-center text-decoration-none text-dark" href="/">
+            <h3 class="text-uppercase fw-bold fs-2">alvaro arbaiza</h3>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
@@ -35,7 +35,7 @@ export default {
         <div class="collapse navbar-collapse flex-grow-0 pe-2" id="navbarSupportedContent">
 
             <!-- lists -->
-            <ul class="navbar-nav ml-auto fs-4">
+            <ul class="navbar-nav ml-auto fs-4 text-dark">
                 <li class="nav-item">
                     <router-link class="nav-link" :to="{name: 'Home'}">
                         <span>

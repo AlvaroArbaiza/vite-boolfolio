@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import ProjectCard from './ProjectCard.vue';
+import { useRoute } from 'vue-router';
 
 export default {
     name: "Projects",
@@ -14,16 +15,45 @@ export default {
             lastPage: null,
             projects: [],
             types: [],
-            selectType:'all'
+            technologies: [],
+            selectType:'all',
+            selectedTechs: []
+        };
+    },
+    setup() {
+        const route = useRoute();        
+        // Verifica se la route corrente è la pagina Projects
+        const isProjectsPage = route.path === '/projects';
+        
+        // se la pagina corrente sarà Projects, isProjectsPage = 'true', else 'false'
+        return {
+            isProjectsPage
         };
     },
     mounted() {
         this.getProjects(1);
         this.getTypes();
+        this.getTechnologies();
+    },
+    watch: {
+        // Il metodo 'watch' indica a Vue di osservare le modifiche alla proprietà "selectedTechs" e di richiamare la funzione "getProjects" quando si verifica una modifica
+        selectedTechs: {
+            handler: 'getProjects',
+            deep: true
+        }
     },
     created() {
     },
     computed: {
+        cachedProjects() {
+            return this.projects;
+        },
+        cachedTypes() {
+            return this.types;
+        },
+        cachedTechnologies() {
+            return this.technologies;
+        }
     },
     methods: {
         // chiamata api backend con axios per la tabella projects
@@ -35,6 +65,10 @@ export default {
 
             if ( this.selectType !== 'all') {
                 params.type_id = this.selectType
+            }
+
+            if ( this.selectedTechs > 0 ) {
+                params.technology_id = this.selectedTechs.join(',')
             }
             
             try {
@@ -61,34 +95,65 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        // chiamata api backend con axios per la tabella technologies
+        async getTechnologies() {
+
+            try {
+                const response = await axios.get(`${this.pathBase}api/technologies`);
+
+                this.technologies = response.data.technologies;
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }
 </script>
 
 <template>
-    <div class="container mt-5">
-
-        <!-- select types -->
-        <div class="row mb-5">
-            <div class="col-3">
-                <label for="types" class="form-label">Tipologia</label>
+    <section class="mx-5 py-5">
+        <div class="mb-5 d-flex align-items-center">
+            <h2 class="fw-bold text-dark fs-1">Projects</h2>
+            <hr class="ms-3 w-100 border-top border-dark opacity-100">
+        </div>
+    
+        <div v-if="isProjectsPage" class="row column-gap-5">
+        
+            <!-- select types -->
+            <div class="col-2 mb-5">
+                <label for="types" class="form-label fw-semibold">Tipologia</label>
                 <select v-model="selectType" class="form-select" id="types" @change="getProjects()">
                     <option value="all" selected>--- All ---</option>
                     <option 
-                        v-for="(element, index) in types" :key="index"
+                        v-for="(element, index) in cachedTypes" :key="index"
                         :value="element.id"    
                     >
                     {{ element.name }}
                     </option>
                 </select>
             </div>
-        </div>
 
+            <!-- checkbox technologies -->
+            <div class="col-3 mb-5">
+                <h6 class="fw-semibold">Linguaggio</h6>
+                <div class="d-flex flex-wrap column-gap-4 row-gap-1">
+                    <div class="form-check" 
+                        v-for="(element, index) in cachedTechnologies" :key="index"
+                    >
+                        <input class="form-check-input" type="checkbox" :value="element.id" :id="element.name" v-model="selectedTechs">
+                        <label class="form-check-label" :for="element.name">
+                            {{ element.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- projects -->
         <div class="row row-gap-5">
-            <div class="col-6" v-for="(element, index) in projects" :key="index">
-
+            <div class="col-6" v-for="(element, index) in cachedProjects" :key="index">
+    
                 <ProjectCard
                     :title="element.title"
                     :pathBase="pathBase"
@@ -105,9 +170,9 @@ export default {
                 </ProjectCard>
             </div>
         </div>
-
+    
         <!-- navigation -->
-        <div class="row mt-5">
+        <div v-if="isProjectsPage" class="row mt-5">
             <nav>
                 <ul class="pagination">
                     <li class="page-item">
@@ -128,7 +193,7 @@ export default {
                 </ul>
             </nav>
         </div>
-    </div>
+    </section>
 </template>
 
 <style>

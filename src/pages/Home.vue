@@ -1,7 +1,10 @@
 <script>
+import Projects from './Projects.vue';
+
 export default {
     name: "Home",
     components: {
+        Projects
     },
     data() {
         return {
@@ -21,7 +24,7 @@ export default {
 <template>
 
     <!-- jumbotron  -->
-    <section class="jumbotron mt-5 mx-5 py-5">
+    <section class="jumbotron my-5 mx-5 py-5 text-dark">
         <div class="d-flex flex-column">
         
              <!-- content  -->
@@ -55,6 +58,9 @@ export default {
             </div>
         </div>
     </section>
+
+    <!-- projects -->
+    <Projects/>
 </template>
 <style lang="scss" scoped>
 

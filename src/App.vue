@@ -1,5 +1,6 @@
 <script>
 import HeaderComp from './components/HeaderComp.vue';
+import { Transition } from 'vue';
 
 export default {
     name: "App",
@@ -19,9 +20,7 @@ export default {
 
 <template>
     <header>
-        <HeaderComp>
-
-        </HeaderComp>
+        <HeaderComp/>
     </header>
 
     <!-- main -->
@@ -32,9 +31,9 @@ export default {
             ** TRANSITION **: Componente utilizzata per ottenere un effetto di transizione al componente che si trova dentro ROUTER-VIEW, la tranzizione poi dovrà essere definita con css o scss
             ** COMPONENT **:  L'attributo :key="route.path" viene utilizzato per garantire la corretta distruzione e ricreazione del componente quando la rotta cambia, mentre l'attributo :is="Component" assegna dinamicamente il componente corretto in base alla rotta attuale
         -->
-        <router-view v-slot="{Component}">
+        <router-view v-slot="{Component, route}">
             <Transition name="fade" >
-                <component :is="Component"/>
+                <component :is="Component" :key="route.path"/>
             </Transition>
         </router-view>
     </main> 
