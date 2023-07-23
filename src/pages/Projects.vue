@@ -119,6 +119,7 @@ export default {
             <hr class="ms-3 w-100 border-top border-dark opacity-100">
         </div>
     
+        <!-- filters -->
         <div v-if="isProjectsPage" class="row column-gap-5">
         
             <!-- select types -->
@@ -150,6 +151,7 @@ export default {
                 </div>
             </div>
         </div>
+
         <!-- projects -->
         <div class="row row-gap-5">
             <div class="col-6" v-for="(element, index) in cachedProjects" :key="index">
@@ -193,8 +195,22 @@ export default {
                 </ul>
             </nav>
         </div>
+
+        <!-- all projects -->
+        <div v-if="!isProjectsPage" class="all-projects mt-4">
+            <router-link class="nav-link d-flex align-items-center column-gap-2 text-dark" :to="{name: 'Projects'}">
+                <i class="fa-solid fa-arrow-right-long fs-3"></i>
+                <h3 class="fw-bold mb-0">All Projects</h3>
+            </router-link > 
+        </div>
     </section>
 </template>
 
-<style>
+<style lang="scss">
+@use '../style/main.scss';
+
+// .all-projects {
+    
+// }
+
 </style>

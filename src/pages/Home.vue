@@ -37,25 +37,6 @@ export default {
                     </div>
                 </h3>
             </div>
-
-            <hr class="border-white border-3 w-75 opacity-100">
-
-            <!-- skills -->
-            <div class="skills d-flex align-items-center gap-4 fs-2">
-                <span>Css</span>
-                <span>-</span>
-                <span>Javascript</span>
-                <span>-</span>
-                <span>Vue</span>
-                <span>-</span>
-                <span>Vite</span>
-                <span>-</span>
-                <span>Php</span>
-                <span>-</span>
-                <span>MySQL</span>
-                <span>-</span>
-                <span>Laravel</span>
-            </div>
         </div>
     </section>
 

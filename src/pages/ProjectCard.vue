@@ -45,7 +45,9 @@ export default {
 
 <div class="card border-0 position-relative">
                     
-    <img class="img-fluid" :src="`${pathBase}storage/${image}`" :alt="title">
+    <router-link class="nav-link" :to="{name: 'Project', params: { slug: projectSlug } }">                     
+        <img class="img-fluid" :src="`${pathBase}storage/${image}`" :alt="title">
+    </router-link > 
     
     <!-- title on hover -->
     <div v-if="isHomePage" class="project-title ps-3">
@@ -56,12 +58,10 @@ export default {
     <div v-if="!isHomePage" class="card-body">
         
         <!-- Titolo -->
-        <router-link class="nav-link" :to="{name: 'Project', params: { slug: projectSlug } }">                     
-            <h5>
-                <span class="opacity-75">Titolo: </span>
-                <span class="opacity-100 text-uppercase">{{ title }}</span>                    
-            </h5>
-        </router-link > 
+        <h5>
+            <span class="opacity-75">Titolo: </span>
+            <span class="opacity-100 text-uppercase">{{ title }}</span>                    
+        </h5>
         
         <!-- Technologies -->
         <h6 v-if="technology" class="mb-2">
@@ -120,11 +120,18 @@ export default {
         color: #ffffff;
         background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8) 55% 97%, transparent 98%);
         transition: 0.5s;
-    
+
+        h4 {            
+            font-size: 0;    
+        }
     }
 
     &:hover .project-title {
         height: 2.5rem;
+    }
+
+    &:hover .project-title h4 {
+        font-size: 1.5rem;
     }
 }
 
